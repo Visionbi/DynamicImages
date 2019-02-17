@@ -39,7 +39,7 @@
   function configure() {
     const popupUrl = `${
       window.location.origin
-    }/tableau_vbi_extensions/DynamicImages/extensionDialog.html`;
+    }/DynamicImages/extensionDialog.html`;
 
     tableau.extensions.ui
       .displayDialogAsync(popupUrl, defaultIntervalInMin, {
