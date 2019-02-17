@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Dynamic Images</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Tableau Extensions API Library  -->
+    <!-- library is in the /lib directory -->
+    <script src="../../lib//tableau-extensions-1.latest.js"></script>
+
+    <!-- Your JavaScript code that uses the Extensions API goes here -->
+    <script src="./dynamicimages.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- Main UI -->
+      <div id="selected_marks"></div>
+      <!-- Popup select Sheet -->
+      <div id="choose_sheet_dialog" class="modal fade" role="dialog">
+        <div class="modal-body">
+          <div id="choose_sheet_buttons"></div>
+        </div>
+      </div>
+
+      <!-- Popup select image -->
+      <div id="title">
+        <div id="choose_image_dialog" class="modal fade" role="dialog">
+          <div class="modal-body">
+            <div id="choose_image_buttons"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center">
+        <h2 id="inactive">
+          Configure extension to proceed.
+        </h2>
+      </div>
+    </div>
+  </body>
+</html>
