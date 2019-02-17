@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Muli:300,400,700");
+h5 {
+  font-weight: 700;
+}
+
+.center {
+  text-align: center;
+}
+
+#images label,
+#count label,
+#percentages label {
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+.navigation {
+  position: relative;
+}
+
+.navigation .leftArrow,
+.navigation .rightArrow {
+  position: absolute;
+  height: 100%;
+  background: #fff;
+  width: 16px;
+}
+
+.navigation .leftArrow:hover,
+.navigation .rightArrow:hover {
+  cursor: pointer;
+}
+
+.navigation .leftArrow {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.navigation .leftArrow:after {
+  content: "";
+  display: inline-block;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 11px solid #cdced1;
+  position: absolute;
+  left: 2px;
+  bottom: 55%;
+}
+
+.navigation .rightArrow {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.navigation .rightArrow:after {
+  content: "";
+  display: inline-block;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 11px solid #cdced1;
+  position: absolute;
+  right: 2px;
+  bottom: 55%;
+}
+
+.images {
+  display: block;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.images .imageContainer {
+  display: inline-block;
+  text-align: center;
+  margin: 0 14px;
+}
+
+.images .imageContainer img {
+  border-radius: 3px;
+  width: 100%;
+  margin-bottom: 5px;
+  width: 74px;
+  height: 123px;
+}
+
+.images .imageContainer .counter {
+  font-family: "Muli", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 6px;
+}
+
+.images .imageContainer .percentages {
+  font-family: "Muli", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #c6ccd5;
+}
+/*# sourceMappingURL=style.css.map */
