@@ -201,7 +201,7 @@
         return [
           [rowData[indexImage]],
           [rowData[indexPercentages]],
-          [rowData[indexImaindexCountge]]
+          [rowData[indexCount]]
         ];
       });
 
