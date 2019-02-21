@@ -193,7 +193,7 @@
           return cell.formattedValue;
         });
 
-        if (isFloat(rowData[indexPercentages])) {
+        if (isFloat(parseFloat(rowData[indexPercentages]))) {
           rowData[indexPercentages] =
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
         }
@@ -210,8 +210,8 @@
     });
   }
 
-  function isFloat(str) {
-    return !isNaN(str) && str.toString().indexOf(".") != -1;
+  function isFloat(num) {
+    return isNaN(num);
   }
 
   function isOdd(num) {
