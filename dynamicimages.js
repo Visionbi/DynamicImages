@@ -5,6 +5,9 @@
   const defaultIntervalInMin = "5";
   let savedInfo;
   let unregisterHandlerFunctions = [];
+  let oldSortParam;
+  let newSortParam;
+  let sortParamChanged;
 
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(() => {
@@ -23,6 +26,10 @@
 
           //updateExtensionBasedOnSettings(currentSettings.newSettings);
           parseInfo(currentSettings);
+
+          setInterval(function() {
+            getValueByParameter("Sort by Parameter", currentSettings);
+          }, 1000);
         }
 
         //console.log(savedSettingsInfo);
@@ -56,15 +63,6 @@
         //  ...
         // ... code for error handling
       });
-  }
-
-  function getSelectedSheet(worksheetName) {
-    // go through all the worksheets in the dashboard and find the one we want
-    return tableau.extensions.dashboardContent.dashboard.worksheets.find(
-      function(sheet) {
-        return sheet.name === worksheetName;
-      }
-    );
   }
 
   function displayImages(images, count, percentages) {
@@ -202,6 +200,25 @@
       // Populate the data table with the rows and columns we just pulled out
       displayImages(image, count, percentages);
     });
+  }
+
+  function getValueByParameter(paramName, currentSettings) {
+    tableau.extensions.dashboardContent.dashboard
+      .getParametersAsync()
+      .then(params => {
+        const parameter = params.find(param => {
+          return param.name === paramName;
+        });
+
+        if (oldSortParam != newSortParam) {
+          oldSortParam = parameter.parameterImpl.currentValue.formattedValue;
+          newSortParam = parameter.parameterImpl.currentValue.formattedValue;
+          parseInfo(currentSettings);
+        } else {
+          oldSortParam = parameter.parameterImpl.currentValue.formattedValue;
+          // sortParamChanged = false;
+        }
+      });
   }
 
   const isFloat = value => {
