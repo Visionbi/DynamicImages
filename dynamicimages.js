@@ -198,7 +198,11 @@
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
         }
 
-        return rowData;
+        return [
+          [rowData[indexImage]],
+          [rowData[indexPercentages]],
+          [rowData[indexImaindexCountge]]
+        ];
       });
 
       // Populate the data table with the rows and columns we just pulled out
