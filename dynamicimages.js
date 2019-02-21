@@ -188,7 +188,21 @@
       //   }
       // });
 
-      const rowItem = worksheetData.data.map(row => {
+      const image = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexImage]];
+      });
+
+      const count = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexCount]];
+      });
+
+      const percentages = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
@@ -198,29 +212,17 @@
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
         }
 
-        return [
-          [rowData[indexImage]],
-          [rowData[indexPercentages]],
-          [rowData[indexCount]]
-        ];
+        return [rowData[indexPercentages]];
       });
 
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(
-        rowItem[indexImage],
-        rowItem[indexCount],
-        rowItem[indexPercentages]
-      );
+      displayImages(image, count, percentages);
     });
   }
 
   const isFloat = value => {
     return !isNaN(value) && value.toString().indexOf(".") != -1;
   };
-
-  function isOdd(num) {
-    return num % 2;
-  }
 
   function fetchCurrentSettings() {
     // While performing async task, show loading message to user.
