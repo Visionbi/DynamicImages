@@ -171,24 +171,21 @@
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
 
-      // for (let i = 0; i < indexColumnstable.length; i++) {
-      //   let index = indexColumnstable[i];
-      //   //console.log(worksheetData.columns[index]);
-      //   columnsName.push(worksheetData.columns[index].fieldName);
-      // }
+      const image = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexImage]];
+      });
 
-      // const data = worksheetData.data.map(row => {
-      //   const rowData = row.map(cell => {
-      //     return cell.formattedValue;
-      //   });
+      const count = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexCount]];
+      });
 
-      //   for (let i = 0; i < indexColumnstable.length; i++) {
-      //     let index2 = indexColumnstable[i];
-      //     columnsData.push(rowData[index2]);
-      //   }
-      // });
-
-      const rowItem = worksheetData.data.map(row => {
+      const percentages = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
@@ -198,11 +195,11 @@
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
         }
 
-        return rowData;
+        return [rowData[indexPercentages]];
       });
 
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(rowItem[indexImage], rowData[indexCount], rowData[indexPercentages]);
+      displayImages(image, count, percentages);
     });
   }
 
