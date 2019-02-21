@@ -214,9 +214,9 @@
     });
   }
 
-  function isFloat(num) {
+  const isFloat = value => {
     return !isNaN(value) && value.toString().indexOf(".") != -1;
-  }
+  };
 
   function isOdd(num) {
     return num % 2;
