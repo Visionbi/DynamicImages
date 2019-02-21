@@ -190,6 +190,7 @@
           return cell.formattedValue;
         });
 
+        // format float as percentages
         if (isFloat(rowData[indexPercentages])) {
           rowData[indexPercentages] =
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
