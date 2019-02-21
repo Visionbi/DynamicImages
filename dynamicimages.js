@@ -188,35 +188,30 @@
       //   }
       // });
 
-      const image = worksheetData.data.map(row => {
-        const rowData = row.map(cell => {
-          return cell.formattedValue;
-        });
-        return [rowData[indexImage]];
-      });
-
-      const count = worksheetData.data.map(row => {
-        const rowData = row.map(cell => {
-          return cell.formattedValue;
-        });
-        return [rowData[indexCount]];
-      });
-
-      const percentages = worksheetData.data.map(row => {
+      const rowItem = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
 
-        let res = [rowData[indexPercentages]];
-        if (worksheet.columns[indexPercentages] === "float") {
-          res = (res * 100).toFixed(2) + "%";
+        if (isFloat(rowData[indexPercentages])) {
+          rowData[indexPercentages] =
+            (rowData[indexPercentages] * 100).toFixed(2) + "%";
         }
-        return res;
+
+        return rowData;
       });
 
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, percentages);
+      displayImages(
+        rowItem[indexImage],
+        rowItem[indexCount],
+        rowItem[indexPercentages]
+      );
     });
+  }
+
+  function isFloat(str) {
+    return !isNaN(str) && str.toString().indexOf(".") != -1;
   }
 
   function isOdd(num) {
