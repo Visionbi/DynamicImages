@@ -206,7 +206,12 @@
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
-        return [rowData[indexPercentages]];
+
+        let res = [rowData[indexPercentages]];
+        if (worksheet.columns[indexPercentages] === "float") {
+          res = (res * 100).toFixed(2) + "%";
+        }
+        return res;
       });
 
       // Populate the data table with the rows and columns we just pulled out
