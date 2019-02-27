@@ -5,6 +5,7 @@
    */
   const imageSettingsKey = "selectedImage";
   const countSettingsKey = "selectedCount";
+  const countTextSettingsKey = "selectedCountText";
   const percentagesSettingsKey = "selectedPercentages";
 
   let selectedImage = [];
@@ -74,6 +75,7 @@
 
         const imageFieldOptions = createImageFieldOptions(name);
         const countFieldOptions = createCountFieldOptions(name);
+        const countTextFieldOptions = createCountTextFieldOptions(name);
         const percentagesFieldOptions = createPercentagesFieldOptions(name);
       });
     });
@@ -103,6 +105,16 @@
     }
   }
 
+  function updateCountText(id) {
+    let idIndex = selectedCountText.indexOf(id);
+
+    if (idIndex < 0) {
+      selectedCountText.push(id);
+    } else {
+      selectedCountText.splice(idIndex, 1);
+    }
+  }
+
   function updatePercentages(id) {
     let idIndex = selectedPercentages.indexOf(id);
     if (idIndex < 0) {
@@ -118,9 +130,15 @@
       imageSettingsKey,
       JSON.stringify(selectedImage)
     );
+
     tableau.extensions.settings.set(
       countSettingsKey,
       JSON.stringify(selectedCount)
+    );
+
+    tableau.extensions.settings.set(
+      countTextSettingsKey,
+      JSON.stringify(selectedCountText)
     );
 
     tableau.extensions.settings.set(
@@ -180,6 +198,27 @@
     }).appendTo(containerDiv);
 
     $("#count").append(containerDiv);
+  }
+
+  function createCountTextFieldOptions(buttonTitle) {
+    let containerDiv = $("<div />");
+
+    $("<input />", {
+      type: "radio",
+      id: buttonTitle.index,
+      name: "counter_text_field",
+      value: buttonTitle.fieldName,
+      click: () => {
+        updateCountText(buttonTitle.index);
+      }
+    }).appendTo(containerDiv);
+
+    $("<label />", {
+      for: buttonTitle.index,
+      text: buttonTitle.fieldName
+    }).appendTo(containerDiv);
+
+    $("#countText").append(containerDiv);
   }
 
   function createPercentagesFieldOptions(buttonTitle) {
