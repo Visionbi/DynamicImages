@@ -10,6 +10,7 @@
 
   let selectedImage = [];
   let selectedCount = [];
+  let selectedCountText = [];
   let selectedPercentages = [];
 
   $(document).ready(() => {
