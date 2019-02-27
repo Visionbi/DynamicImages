@@ -64,9 +64,11 @@
     );
     const textFormat2 = $("<h5>Select the count to display</h5>");
     const textFormat3 = $("<h5>Select the percentages to display</h5>");
+    const textFormat4 = $("<h5>Select the count text to display</h5>");
 
     $("#images").append(textFormat);
     $("#count").append(textFormat2);
+    $("#countText").append(textFormat4);
     $("#percentages").append(textFormat3);
 
     worksheet.getSummaryDataAsync().then(data => {
