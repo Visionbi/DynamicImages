@@ -65,7 +65,7 @@
       });
   }
 
-  function displayImages(images, count, percentages) {
+  function displayImages(images, count, countText, percentages) {
     let slideSize = 102;
     $("#selected_marks").empty();
 
@@ -92,6 +92,7 @@
 
       let image = images[i][0] + " ".split(",");
       let singleCount = count[i][0] + " ".split(",");
+      let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
 
       $("<img />", {
@@ -102,7 +103,7 @@
       $("<div>", {
         class: "counter"
       })
-        .text(`${singleCount}`)
+        .text(`${singleCount} ${singleCountText}`)
         .appendTo(imageContainer);
 
       $("<div>", {
@@ -158,6 +159,7 @@
     );
     let indexImage = settings.selectedImage[1];
     let indexCount = settings.selectedCount[1];
+    let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
     // let cleanIndex = settings.selectedColumns.slice(
     //   1,
@@ -183,6 +185,13 @@
         return [rowData[indexCount]];
       });
 
+      const countText = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+        return [rowData[indexCountText]];
+      });
+
       const percentages = worksheetData.data.map(row => {
         const rowData = row.map(cell => {
           return cell.formattedValue;
@@ -198,7 +207,7 @@
       });
 
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, percentages);
+      displayImages(image, count, countText, percentages);
     });
   }
 
