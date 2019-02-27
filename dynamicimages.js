@@ -27,9 +27,9 @@
           //updateExtensionBasedOnSettings(currentSettings.newSettings);
           parseInfo(currentSettings);
 
-          setInterval(function() {
-            getValueByParameter("Sort by Parameter", currentSettings);
-          }, 1000);
+          // setInterval(function() {
+          //   getValueByParameter("Sort by Parameter", currentSettings);
+          // }, 1000);
         }
 
         //console.log(savedSettingsInfo);
