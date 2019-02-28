@@ -229,7 +229,7 @@
 
         // format price as float
         if (isFloat(rowData[indexPrices])) {
-          rowData[indexPrices] = rowData[indexPrices].toFixed(2);
+          rowData[indexPrices] = parseFloat(rowData[indexPrices]).toFixed(2);
         }
 
         return [rowData[indexPrices]];
