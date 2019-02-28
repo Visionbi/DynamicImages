@@ -3,11 +3,9 @@
 // Wrap everything in an anonymous function to avoid poluting the global namespace
 (() => {
   const defaultIntervalInMin = "5";
-  let savedInfo;
   let unregisterHandlerFunctions = [];
   let oldSortParam;
   let newSortParam;
-  // let sortParamChanged;
 
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(() => {
