@@ -100,17 +100,29 @@
         alt: ""
       }).appendTo(imageContainer);
 
+      let firstLine = "";
+
+      if (typeof singleCount !== "undefined") {
+        firstLine += singleCount;
+      }
+
+      if (typeof singleCountText !== "undefined") {
+        firstLine += singleCountText;
+      }
+
       $("<div>", {
         class: "counter"
       })
-        .text(`${singleCount} ${singleCountText}`)
+        .text(`${firstLine}`)
         .appendTo(imageContainer);
 
-      $("<div>", {
-        class: "percentages"
-      })
-        .text(`${singlePercentages}`)
-        .appendTo(imageContainer);
+      if (typeof singlePercentages !== "undefined") {
+        $("<div>", {
+          class: "percentages"
+        })
+          .text(`${singlePercentages}`)
+          .appendTo(imageContainer);
+      }
 
       imagesContainer.append(imageContainer);
     }
