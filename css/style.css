@@ -4,6 +4,11 @@ h5 {
   font-weight: 700;
 }
 
+.container {
+  margin: 0;
+  padding: 15px;
+}
+
 .center {
   text-align: center;
 }

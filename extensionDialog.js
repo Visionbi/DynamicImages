@@ -7,11 +7,13 @@
   const countSettingsKey = "selectedCount";
   const countTextSettingsKey = "selectedCountText";
   const percentagesSettingsKey = "selectedPercentages";
+  const pricesSettingsKey = "selectedPrices";
 
   let selectedImage = [];
   let selectedCount = [];
   let selectedCountText = [];
   let selectedPercentages = [];
+  let selectedPrices = [];
 
   $(document).ready(() => {
     // The only difference between an extension in a dashboard and an extension
@@ -36,6 +38,7 @@
           $("#images").empty();
           $("#count").empty();
           $("#percentages").empty();
+          $("#prices").empty();
 
           // Get the worksheet name which was selected
           let worksheetName = worksheet.name;
@@ -64,12 +67,14 @@
     );
     const textFormat2 = $("<h5>Select the count to display</h5>");
     const textFormat3 = $("<h5>Select the percentages to display</h5>");
-    const textFormat4 = $("<h5>Select the count text to display</h5>");
+    const textFormat4 = $("<h5>Select the appendix text to display</h5>");
+    const textFormat5 = $("<h5>Select the price to display</h5>");
 
     $("#images").append(textFormat);
     $("#count").append(textFormat2);
     $("#countText").append(textFormat4);
     $("#percentages").append(textFormat3);
+    $("#prices").append(textFormat5);
 
     worksheet.getSummaryDataAsync().then(data => {
       const columnsTable = data.columns;
@@ -80,6 +85,7 @@
         const countFieldOptions = createCountFieldOptions(name);
         const countTextFieldOptions = createCountTextFieldOptions(name);
         const percentagesFieldOptions = createPercentagesFieldOptions(name);
+        const pricesFieldOptions = createPricesFieldOptions(name);
       });
     });
   }
@@ -127,6 +133,15 @@
     }
   }
 
+  function updatePrices(id) {
+    let idIndex = selectePrices.indexOf(id);
+    if (idIndex < 0) {
+      selectedPrices.push(id);
+    } else {
+      selectedPrices.splice(idIndex, 1);
+    }
+  }
+
   function closeDialog() {
     let currentSettings = tableau.extensions.settings.getAll();
     tableau.extensions.settings.set(
@@ -147,6 +162,11 @@
     tableau.extensions.settings.set(
       percentagesSettingsKey,
       JSON.stringify(selectedPercentages)
+    );
+
+    tableau.extensions.settings.set(
+      pricesSettingsKey,
+      JSON.stringify(selectedPrices)
     );
 
     tableau.extensions.settings.saveAsync().then(newSavedSettings => {
@@ -201,6 +221,27 @@
     }).appendTo(containerDiv);
 
     $("#count").append(containerDiv);
+  }
+
+  function createPricesFieldOptions(buttonTitle) {
+    let containerDiv = $("<div />");
+
+    $("<input />", {
+      type: "radio",
+      id: buttonTitle.index,
+      name: "price_field",
+      value: buttonTitle.fieldName,
+      click: () => {
+        updatePrices(buttonTitle.index);
+      }
+    }).appendTo(containerDiv);
+
+    $("<label />", {
+      for: buttonTitle.index,
+      text: buttonTitle.fieldName
+    }).appendTo(containerDiv);
+
+    $("#price").append(containerDiv);
   }
 
   function createCountTextFieldOptions(buttonTitle) {

@@ -63,7 +63,7 @@
       });
   }
 
-  function displayImages(images, count, countText, percentages) {
+  function displayImages(images, count, countText, percentages, prices) {
     let slideSize = 102;
     $("#selected_marks").empty();
 
@@ -92,6 +92,7 @@
       let singleCount = count[i][0] + " ".split(",");
       let singleCountText = countText[i][0] + " ".split(",");
       let singlePercentages = percentages[i][0] + " ".split(",");
+      let singlePrice = prices[i][0] + " ".split(",");
 
       $("<img />", {
         src: `${image}`,
@@ -102,6 +103,10 @@
 
       if (singleCount.indexOf("undefined") === -1) {
         firstLine += singleCount;
+      }
+
+      if (singlePrice.indexOf("undefined") === -1) {
+        firstLine += singlePrice;
       }
 
       if (singleCountText.indexOf("undefined") === -1) {
@@ -171,6 +176,7 @@
     let indexCount = settings.selectedCount[1];
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
+    let indexPrices = settings.selectedPrices[1];
     // let cleanIndex = settings.selectedColumns.slice(
     //   1,
     //   settings.selectedColumns.length - 1
@@ -207,7 +213,7 @@
           return cell.formattedValue;
         });
 
-        // format float as percentages
+        // format percentages as float
         if (isFloat(rowData[indexPercentages])) {
           rowData[indexPercentages] =
             (rowData[indexPercentages] * 100).toFixed(2) + "%";
@@ -216,8 +222,21 @@
         return [rowData[indexPercentages]];
       });
 
+      const prices = worksheetData.data.map(row => {
+        const rowData = row.map(cell => {
+          return cell.formattedValue;
+        });
+
+        // format price as float
+        if (isFloat(rowData[indexPrices])) {
+          rowData[indexPrices] = (rowData[indexPrices] * 100).toFixed(2);
+        }
+
+        return [rowData[indexPrices]];
+      });
+
       // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, countText, percentages);
+      displayImages(image, count, countText, percentages, prices);
     });
   }
 
