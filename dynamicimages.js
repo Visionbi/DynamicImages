@@ -7,7 +7,7 @@
   let unregisterHandlerFunctions = [];
   let oldSortParam;
   let newSortParam;
-  let sortParamChanged;
+  // let sortParamChanged;
 
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(() => {
