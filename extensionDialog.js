@@ -241,7 +241,7 @@
       text: buttonTitle.fieldName
     }).appendTo(containerDiv);
 
-    $("#prices").append(containerDiv);
+    $("#price").append(containerDiv);
   }
 
   function createCountTextFieldOptions(buttonTitle) {
