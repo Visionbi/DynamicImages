@@ -102,11 +102,11 @@
 
       let firstLine = "";
 
-      if (typeof singleCount !== "undefined") {
+      if (singleCount.indexOf("undefined") > -1) {
         firstLine += singleCount;
       }
 
-      if (typeof singleCountText !== "undefined") {
+      if (singleCountText.indexOf("undefined") > -1) {
         firstLine += singleCountText;
       }
 
@@ -116,7 +116,7 @@
         .text(`${firstLine}`)
         .appendTo(imageContainer);
 
-      if (typeof singlePercentages !== "undefined") {
+      if (singlePercentages.indexOf("undefined") > -1) {
         $("<div>", {
           class: "percentages"
         })
