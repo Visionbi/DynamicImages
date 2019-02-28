@@ -13,10 +13,7 @@ h5 {
   text-align: center;
 }
 
-#images label,
-#count label,
-#countText label,
-#percentages label {
+label label {
   margin-left: 10px;
   font-weight: normal;
 }
