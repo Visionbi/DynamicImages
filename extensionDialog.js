@@ -134,7 +134,7 @@
   }
 
   function updatePrices(id) {
-    let idIndex = selectePrices.indexOf(id);
+    let idIndex = selectedPrices.indexOf(id);
     if (idIndex < 0) {
       selectedPrices.push(id);
     } else {
