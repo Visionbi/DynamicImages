@@ -79,14 +79,15 @@ input[type="radio"] ~ label {
   display: inline-block;
   text-align: center;
   margin: 0 14px;
+  width: 74px;
+  height: 123px;
 }
 
 .images .imageContainer img {
   border-radius: 3px;
   width: 100%;
   margin-bottom: 10px;
-  width: 74px;
-  height: 123px;
+  height: calc(100% - 17px);
 }
 
 .images .imageContainer .counter {
