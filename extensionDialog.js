@@ -68,6 +68,7 @@
     const textFormat3 = $("<h5>Select the percentages to display</h5>");
     const textFormat4 = $("<h5>Select the appendix text to display</h5>");
     const textFormat5 = $("<h5>Select the price to display</h5>");
+    const textFormat6 = $("<h5>Select secondary worksheet</h5>");
 
     $.each($(".configItem"), i => {
       $(".configItem")
