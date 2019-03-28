@@ -8,12 +8,14 @@
   const countTextSettingsKey = "selectedCountText";
   const percentagesSettingsKey = "selectedPercentages";
   const pricesSettingsKey = "selectedPrices";
+  const worksheetSettingsKey = "selectedWorksheet";
 
   let selectedImage = [];
   let selectedCount = [];
   let selectedCountText = [];
   let selectedPercentages = [];
   let selectedPrices = [];
+  let selectedWorksheet = [];
 
   $(document).ready(() => {
     // The only difference between an extension in a dashboard and an extension
@@ -35,10 +37,7 @@
       dashboard.worksheets.forEach(worksheet => {
         const button = createButton(worksheet.name);
         button.click(() => {
-          $("#images").empty();
-          $("#count").empty();
-          $("#percentages").empty();
-          $("#prices").empty();
+          $(".configItem").empty();
 
           // Get the worksheet name which was selected
           let worksheetName = worksheet.name;
@@ -62,7 +61,7 @@
   function showChooseSelection(worksheetName) {
     const worksheet = getSelectedSheet(worksheetName);
 
-    const textFormat = $(
+    const textFormat1 = $(
       "<h5>Select the field that indicated the URL of the image to display</h5>"
     );
     const textFormat2 = $("<h5>Select the count to display</h5>");
@@ -70,11 +69,11 @@
     const textFormat4 = $("<h5>Select the appendix text to display</h5>");
     const textFormat5 = $("<h5>Select the price to display</h5>");
 
-    $("#images").append(textFormat);
-    $("#count").append(textFormat2);
-    $("#countText").append(textFormat4);
-    $("#percentages").append(textFormat3);
-    $("#prices").append(textFormat5);
+    $.each($(".configItem"), i => {
+      $(".configItem")
+        .eq(i)
+        .append(eval("textFormat" + (i + 1)));
+    });
 
     worksheet.getSummaryDataAsync().then(data => {
       const columnsTable = data.columns;
@@ -86,6 +85,14 @@
         const countTextFieldOptions = createCountTextFieldOptions(name);
         const percentagesFieldOptions = createPercentagesFieldOptions(name);
         const pricesFieldOptions = createPricesFieldOptions(name);
+      });
+    });
+
+    let dashboard = tableau.extensions.dashboardContent.dashboard;
+    dashboard.worksheets.forEach((worksheet, i) => {
+      const worksheetFieldOptions = createWorksheetsOptions({
+        index: i,
+        fieldName: worksheet.name,
       });
     });
   }
@@ -142,6 +149,10 @@
     }
   }
 
+  function updateWorksheet(name) {
+    selectedWorksheet.push(name);
+  }
+
   function closeDialog() {
     let currentSettings = tableau.extensions.settings.getAll();
     tableau.extensions.settings.set(
@@ -169,6 +180,11 @@
       JSON.stringify(selectedPrices)
     );
 
+    tableau.extensions.settings.set(
+      worksheetSettingsKey,
+      JSON.stringify(selectedWorksheet)
+    );
+
     tableau.extensions.settings.saveAsync().then(newSavedSettings => {
       tableau.extensions.ui.closeDialog("config");
     });
@@ -191,12 +207,12 @@
       value: buttonTitle.fieldName,
       click: () => {
         updateURL(buttonTitle.index);
-      }
+      },
     }).appendTo(containerDiv);
 
     $("<label />", {
       for: buttonTitle.index,
-      text: buttonTitle.fieldName
+      text: buttonTitle.fieldName,
     }).appendTo(containerDiv);
 
     $("#images").append(containerDiv);
@@ -212,12 +228,12 @@
       value: buttonTitle.fieldName,
       click: () => {
         updateCount(buttonTitle.index);
-      }
+      },
     }).appendTo(containerDiv);
 
     $("<label />", {
       for: buttonTitle.index,
-      text: buttonTitle.fieldName
+      text: buttonTitle.fieldName,
     }).appendTo(containerDiv);
 
     $("#count").append(containerDiv);
@@ -233,12 +249,12 @@
       value: buttonTitle.fieldName,
       click: () => {
         updatePrices(buttonTitle.index);
-      }
+      },
     }).appendTo(containerDiv);
 
     $("<label />", {
       for: buttonTitle.index,
-      text: buttonTitle.fieldName
+      text: buttonTitle.fieldName,
     }).appendTo(containerDiv);
 
     $("#prices").append(containerDiv);
@@ -254,12 +270,12 @@
       value: buttonTitle.fieldName,
       click: () => {
         updateCountText(buttonTitle.index);
-      }
+      },
     }).appendTo(containerDiv);
 
     $("<label />", {
       for: buttonTitle.index,
-      text: buttonTitle.fieldName
+      text: buttonTitle.fieldName,
     }).appendTo(containerDiv);
 
     $("#countText").append(containerDiv);
@@ -275,15 +291,36 @@
       value: buttonTitle.fieldName,
       click: () => {
         updatePercentages(buttonTitle.index);
-      }
+      },
     }).appendTo(containerDiv);
 
     $("<label />", {
       for: buttonTitle.index,
-      text: buttonTitle.fieldName
+      text: buttonTitle.fieldName,
     }).appendTo(containerDiv);
 
     $("#percentages").append(containerDiv);
+  }
+
+  function createWorksheetsOptions(buttonTitle) {
+    let containerDiv = $("<div />");
+
+    $("<input />", {
+      type: "radio",
+      id: buttonTitle.index,
+      name: "worksheet_field",
+      value: buttonTitle.fieldName,
+      click: () => {
+        updateWorksheet(buttonTitle.fieldName);
+      },
+    }).appendTo(containerDiv);
+
+    $("<label />", {
+      for: buttonTitle.index,
+      text: buttonTitle.fieldName,
+    }).appendTo(containerDiv);
+
+    $("#worksheet").append(containerDiv);
   }
 
   function getSelectedSheet(worksheetName) {

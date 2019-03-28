@@ -4,8 +4,11 @@
 (() => {
   const defaultIntervalInMin = "5";
   let unregisterHandlerFunctions = [];
-  let oldSortParam;
-  let newSortParam;
+
+  // default values for secondary worksheet
+  const secondaryImageIndex = 1;
+  const secondaryIndexCountText = 4;
+  const secondaryColumnNumber = 5;
 
   // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(() => {
@@ -46,7 +49,7 @@
     tableau.extensions.ui
       .displayDialogAsync(popupUrl, defaultIntervalInMin, {
         height: 500,
-        width: 500
+        width: 500,
       })
       .then(closePayload => {
         $("#inactive").hide();
@@ -65,11 +68,11 @@
     $("#selected_marks").empty();
 
     const navigation = $("<div>", {
-      class: "navigation"
+      class: "navigation",
     }).appendTo("#selected_marks");
 
     $("<div>", {
-      class: "leftArrow"
+      class: "leftArrow",
     })
       .click(() => {
         $(".images").animate({ scrollLeft: "-=" + slideSize }, 500);
@@ -77,12 +80,12 @@
       .appendTo(navigation);
 
     const imagesContainer = $("<div>", {
-      class: "images"
+      class: "images",
     }).appendTo(navigation);
 
     for (let i = 0; i < images.length; i++) {
       let imageContainer = $("<div>", {
-        class: "imageContainer"
+        class: "imageContainer",
       }).appendTo("#selected_marks");
 
       let image = images[i][0] + " ".split(",");
@@ -93,7 +96,7 @@
 
       $("<img />", {
         src: `${image}`,
-        alt: ""
+        alt: "",
       }).appendTo(imageContainer);
 
       let firstLine = "";
@@ -111,14 +114,14 @@
       }
 
       $("<div>", {
-        class: "counter"
+        class: "counter",
       })
         .text(`${firstLine}`)
         .appendTo(imageContainer);
 
       if (singlePercentages.indexOf("undefined") === -1) {
         $("<div>", {
-          class: "percentages"
+          class: "percentages",
         })
           .text(`${singlePercentages}`)
           .appendTo(imageContainer);
@@ -128,7 +131,7 @@
     }
 
     $("<div>", {
-      class: "rightArrow"
+      class: "rightArrow",
     })
       .click(() => {
         $(".images").animate({ scrollLeft: "+=" + slideSize }, 500);
@@ -175,6 +178,9 @@
     let indexCountText = settings.selectedCountText[1];
     let indexPercentages = settings.selectedPercentages[1];
     let indexPrices = settings.selectedPrices[1];
+    let selectedWorksheet = settings.selectedWorksheet
+      ? eval(settings.selectedWorksheet)[0]
+      : false;
 
     worksheet.getSummaryDataAsync().then(marks => {
       const worksheetData = marks;
@@ -227,28 +233,58 @@
         return [rowData[indexPrices]];
       });
 
-      // Populate the data table with the rows and columns we just pulled out
-      displayImages(image, count, countText, percentages, prices);
-    });
-  }
+      // initialize with 5 fixed items from a secondary worksheet if no data according to filters
+      if (!worksheetData.data.length && selectedWorksheet) {
+        const secondaryWorksheet = getSelectedSheet(selectedWorksheet);
+        let secondaryImage;
+        let secondaryCountText;
 
-  function getValueByParameter(paramName, currentSettings) {
-    tableau.extensions.dashboardContent.dashboard
-      .getParametersAsync()
-      .then(params => {
-        const parameter = params.find(param => {
-          return param.name === paramName;
+        secondaryWorksheet.getSummaryDataAsync().then(marks => {
+          const secondaryWorksheetData = marks;
+
+          if (secondaryWorksheetData.data.length) {
+            indexImage = secondaryImageIndex;
+            indexCountText = secondaryIndexCountText;
+
+            secondaryImage = secondaryWorksheetData.data.map(row => {
+              const rowData = row.map(cell => {
+                return cell.formattedValue;
+              });
+              return [rowData[indexImage]];
+            });
+
+            secondaryCountText = secondaryWorksheetData.data.map(row => {
+              const rowData = row.map(cell => {
+                return cell.formattedValue;
+              });
+              return [rowData[indexCountText]];
+            });
+          }
+
+          // generate default settings for secondary table
+          let count = [],
+            percentages = [],
+            prices = [];
+          for (let i = 0; i < secondaryColumnNumber; i++) {
+            count.push([0]);
+            percentages.push([undefined]);
+            prices.push([undefined]);
+          }
+
+          // Populate the data table with the rows and columns we just pulled out
+          displayImages(
+            secondaryImage,
+            count,
+            secondaryCountText,
+            percentages,
+            prices
+          );
         });
-
-        if (oldSortParam != newSortParam) {
-          oldSortParam = parameter.parameterImpl.currentValue.formattedValue;
-          newSortParam = parameter.parameterImpl.currentValue.formattedValue;
-          parseInfo(currentSettings);
-        } else {
-          oldSortParam = parameter.parameterImpl.currentValue.formattedValue;
-          // sortParamChanged = false;
-        }
-      });
+      } else {
+        // Populate the data table with the rows and columns we just pulled out
+        displayImages(image, count, countText, percentages, prices);
+      }
+    });
   }
 
   const isFloat = value => {
