@@ -196,6 +196,12 @@
         const rowData = row.map(cell => {
           return cell.formattedValue;
         });
+
+        // format float if price
+        if (isFloat(rowData[indexCount])) {
+          rowData[indexCount] = parseFloat(rowData[indexCount]).toFixed(2);
+        }
+
         return [rowData[indexCount]];
       });
 
