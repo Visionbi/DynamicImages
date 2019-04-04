@@ -6,8 +6,8 @@
   let unregisterHandlerFunctions = [];
 
   // default values for secondary worksheet
-  const secondaryImageIndex = 1;
-  const secondaryIndexCountText = 4;
+  // const secondaryImageIndex = 1;
+  // const secondaryIndexCountText = 4;
   const secondaryColumnNumber = 5;
 
   // Use the jQuery document ready signal to know when everything has been initialized
@@ -244,8 +244,17 @@
           const secondaryWorksheetData = marks;
 
           if (secondaryWorksheetData.data.length) {
-            indexImage = secondaryImageIndex;
-            indexCountText = secondaryIndexCountText;
+            // indexImage = secondaryImageIndex;
+            indexImage = secondaryWorksheetData.columns.find(el => {
+              return el.fieldName === "Item Image" ? el.index : false;
+            });
+
+            // indexCountText = secondaryIndexCountText;
+            indexCountText = secondaryWorksheetData.columns.find(el => {
+              return el.fieldName === "Measure (extension stirng)"
+                ? el.index
+                : false;
+            });
 
             secondaryImage = secondaryWorksheetData.data.map(row => {
               const rowData = row.map(cell => {
