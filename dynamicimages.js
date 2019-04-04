@@ -247,14 +247,14 @@
             // indexImage = secondaryImageIndex;
             indexImage = secondaryWorksheetData.columns.find(el => {
               return el.fieldName === "Item Image" ? el.index : false;
-            });
+            }).index;
 
             // indexCountText = secondaryIndexCountText;
             indexCountText = secondaryWorksheetData.columns.find(el => {
               return el.fieldName === "Measure (extension stirng)"
                 ? el.index
                 : false;
-            });
+            }).index;
 
             secondaryImage = secondaryWorksheetData.data.map(row => {
               const rowData = row.map(cell => {
