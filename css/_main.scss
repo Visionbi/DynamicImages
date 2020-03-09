@@ -11,12 +11,12 @@ h5 {
   text-align: center;
 }
 
-input[type="radio"] ~ label {
+input[type='radio'] ~ label {
   margin-left: 10px;
   font-weight: normal;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Muli:300,400,700");
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,700');
 
 .navigation {
   margin: auto;
@@ -44,7 +44,7 @@ input[type="radio"] ~ label {
     top: 0;
 
     &:after {
-      content: "";
+      content: '';
       display: inline-block;
       border-top: 10px solid transparent;
       border-bottom: 10px solid transparent;
@@ -61,7 +61,7 @@ input[type="radio"] ~ label {
     top: 0;
 
     &:after {
-      content: "";
+      content: '';
       display: inline-block;
       border-top: 10px solid transparent;
       border-bottom: 10px solid transparent;
@@ -93,7 +93,7 @@ input[type="radio"] ~ label {
     }
 
     .counter {
-      font-family: "Muli", sans-serif;
+      font-family: 'Muli', sans-serif;
       font-size: 10px;
       font-weight: 700;
       color: #0a0a0a;
@@ -101,10 +101,10 @@ input[type="radio"] ~ label {
     }
 
     .percentages {
-      font-family: "Muli", sans-serif;
+      font-family: 'Muli', sans-serif;
       font-size: 12px;
       font-weight: 300;
-      color: #c6ccd5;
+      color: #969799;
     }
   }
 }
